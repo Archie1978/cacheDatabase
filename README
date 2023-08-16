@@ -1,0 +1,62 @@
+# Cache SQL
+
+The cacheSQL library is an algorithm used in my backup software (in 2012). The goal was to improve SQL writing in sqlite on simple objects in view of making file paths in SQL databases.
+The new lib is updated with use of gorm and more generic use.
+
+It is therefore still experiential and I only use it in rare performance cases.
+
+Becarefull: Any data that is not recorded via the lib or complex query usage is not cached.
+
+The library records data every second. If the recorded data causes an error, you are not informed.
+
+## Use General
+Informs the index cache to be created by ListKeyUnique
+```
+
+type SchoolSimply struct {
+	ID   uint `gorm:"primarykey"`
+	Name string
+}  
+
+func (school SchoolSimply) ListKeyUnique() []string {
+	return []string{"ID", "Name"}
+}
+
+```
+
+Get data into cache
+```bash
+databaseGetWithCache(&s4, "ParentID", fmt.Sprintf("%v", s21.ID))
+```
+
+Save data into cache
+```bash
+SaveData(&s)
+```
+
+## Use with Path
+### Init 
+```
+type TestFile struct {
+	FileTemplate
+	Mode uint
+	Size uint64
+	Uid int
+	Gid int
+}
+```
+### Get Path
+```bash
+_, err = GetPath(&TestFile{}, "/tmp/dataCache/Welcome")
+
+
+### Save Path
+```bash
+_, err = GetPath(&TestFile{}, "/tmp/dataCache/Welcome")
+```
+
+
+## Example USE
+### cmd_folder_scan
+cmd_folder_scan which calculates the size in each folder.
+The program has a problem in propagating sizes up to the root.
