@@ -1,4 +1,5 @@
-module cacheDatabase
+module github.com/Archie1978/cacheDatabase
+
 
 go 1.19
 
